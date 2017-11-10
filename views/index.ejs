@@ -1,13 +1,39 @@
 <% include ./partials/header %>
 
-
-<h1>Home page</h1>
-<h3>Search for local bars!</h3>
-
-<form method="POST" action="/search">
-    <input type="text" name="search" placeholder="Search by name, city, or zip"/>
-    <button>Submit</button>
-</form>
-
-
+<div class="container">
+    <div id="search-div" class="col-md-8 col-md-offset-3">
+        <h1>Home page</h1>
+        <h3>Search for local bars!</h3>
+        
+        <form name="searchForm" method="POST" action="/search">
+            <input id="input" type="text" name="search" placeholder="Search by name, city, or zip"/>
+            <button id="search-button" class="btn btn-primary">Submit</button>
+        </form>
+        
+        <script>
+            var input = document.getElementById('input');
+        
+            
+            // Checks if the user had previously searched without being logged in.
+            if(sessionStorage.getItem('searchTerms')) {
+                input.value = sessionStorage.getItem('searchTerms');
+                sessionStorage.clear();
+                document.forms["searchForm"].submit();
+            }
+        </script>
+        
+        <!-- Could maybe check if we need to add to session storage by only running script
+             when user is not logged in! -->
+             
+            <!-- <% // if(!currentUser) { %>-->
+            <!--    <script>-->
+            <!--        var button = document.getElementById('button');-->
+                    
+            <!--        button.addEventListener('click', function(e) {-->
+            <!--            sessionStorage.setItem('searchTerms', input.value);-->
+            <!--        });-->
+            <!--    </script>-->
+            <!--<% // } %>-->
+    </div>
+</div>
 <% include ./partials/footer %>

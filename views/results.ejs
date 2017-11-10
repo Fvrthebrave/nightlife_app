@@ -1,0 +1,24 @@
+<% include ./partials/header %>
+
+<div class="container">
+    <% results.forEach(function(result) { %>
+        <div class="col-sm-6">
+            <h2 id="results-name"><%= result.name %></h2>
+            <h5><%= result.location.address1 %></h5>
+            <a href="<%= result.url %>">Reviews</a>
+            <a class="join-button btn btn-primary" href="#">Join meetup!</a>
+            <img class="img-thumbnail" src="<%= result.image_url %>">
+        </div>
+    <% }) %>
+
+</div>
+
+<script>
+    var resultsName = document.getElementById('results-name');
+    
+    if(sessionStorage.getItem('searchTerms')) {
+        resultsName.textContent = sessionStorage.getItem('searchTerms');
+        sessionStorage.clear();
+    }
+</script>
+<% include ./partials/footer %>

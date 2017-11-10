@@ -1,23 +1,46 @@
+'use strict';
+
 var express = require('express'),
     mongoose = require('mongoose'),
+    bodyParser = require('body-parser'),
+    yelp = require('yelp-fusion'),
     app = express();
-    
-mongoose.connect(process.env.DATABASEURL);  
-console.log(process.env.DATABASEURL);
 
-app.set(express.static('public'));
+const clientId = 'k9le3C38kyN_er7s3Ynm-g';
+const clientSecret = 'qlQkz6kOtEt0TqRc3VV76WyJx7iX1w2zrVY7RvUTBzC0XMsvWwbEdmqIqee34Ncg';
+    
+mongoose.connect('mongodb://localhost/nightlife_app');  
+
 app.set('view engine', 'ejs');
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 app.get('/', function(req, res) {
     res.render('index'); 
 });
 
 app.post('/search', function(req, res) {
-    // API_KEY: k9le3C38kyN_er7s3Ynm-g
-    // SECRET: qlQkz6kOtEt0TqRc3VV76WyJx7iX1w2zrVY7RvUTBzC0XMsvWwbEdmqIqee34Ncg
+    var searchRequest = {
+        term: req.body.search,
+        location: 'Laguna Niguel, CA'
+    };
     
-    // Run Yelp API search here...
-    res.send('Search page coming...');
+    console.log('*********** REQUEST: ' + req);
+    
+    yelp.accessToken(clientId, clientSecret).then(response => {
+      const client = yelp.client(response.jsonBody.access_token);
+    
+      client.search(searchRequest).then(response => {
+        const results = response.jsonBody.businesses;
+        console.log(results);
+        
+        res.render('results', { results: results });
+      });
+    }).catch(e => {
+      console.log(e);
+    });
 });
 
 

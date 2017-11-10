@@ -1,0 +1,35 @@
+body {
+    padding: 10%;
+}
+
+img {
+    max-height: 500px;
+}
+
+.join-button {
+    display: block;
+    width: 20%;
+}
+
+#search-div {
+    text-align: center;
+    padding: 2%;
+    width: 50%;
+    height: 50%;
+    border: solid 1px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 0;
+    background: aliceblue;
+}
+
+#input {
+    border-radius: 10px;
+    width: 60%;
+}
+
+#search-button {
+    margin: 3%;
+    border-radius: 10px;
+    width: 60%;
+    display: inline-block;
+}
